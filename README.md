@@ -1,5 +1,12 @@
-# dbt-transformations
-dbt transformations for Snowflake data warehouse.
+# airbyte_dbt_covid19
+
+dbt transformation project for Snowflake data warehouse. Performs basic transformations for staged snowflake data tables containing covid19 data.
+
+## Model
+
+![dag_diagram](https://user-images.githubusercontent.com/4624500/174817608-f8513b8f-932e-4c7e-b1e6-2e6ed7f40f6d.png)
+
+## dbt Metrics
 
 ## Linting
 
