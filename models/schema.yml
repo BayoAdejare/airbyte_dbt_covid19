@@ -1,0 +1,76 @@
+# TODO:
+version: 2
+
+sources:
+  - name: raw_covid19
+    schema: AIRBYTE_SCHEMA
+    database: AIRBYTE_DATABASE
+    description: A replica of the covid19 demographics data from Google BigQuery Open data.
+    tables:
+      - name: STG_DEMOGRAPHICS
+        columns:
+          - name: _AIRBYTE_DATA
+            description: Raw json blob object of demographics data.
+            tests:
+              - unique
+              - not_null
+
+      - name: STG_ECONOMY
+        columns:
+          - name: _AIRBYTE_DATA
+            description: Raw json blob object of economy data.
+            tests:
+              - unique
+              - not_null
+
+      - name: STG_EPIDEMIOLOGY
+        columns:
+          - name: _AIRBYTE_DATA
+            description: Raw json blob object of epidemiology data.
+            tests:
+              - unique
+              - not_null
+
+
+
+models:
+  - name: stg_demographics
+    config:
+      tags: ['pii']
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_economy
+    config:
+      materialized: view
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - unique
+          - not_null
+ 
+  - name: stg_epidemiology
+    config:
+      materialized: view
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - unique
+          - not_null
+
+
+# -- loaded_at_field: _airbyte_loaded_at
+# -- freshness:
+# --          warn_after: {count: 24, period: hour}
+# --          error_after: {count: 48, period: hour}
