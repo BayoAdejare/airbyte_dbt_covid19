@@ -5,21 +5,28 @@ with epidemiology as (
 
     select
     *
-    from {{ ref('stg_epidemiology')}}
+    from {{ ref('base_epidemiology')}}
 
 ),
 demographics as (
 
     select
     *
-    from {{ ref('stg_demographics')}}
+    from {{ ref('base_demographics')}}
 
 ),
 economy as (
 
     select
         *
-    from {{ ref('stg_economy')}}
+    from {{ ref('base_economy')}}
+
+    ),
+index as (
+
+    select
+        *
+    from {{ ref('base_index')}}
 
     ),
 
@@ -37,6 +44,7 @@ epidemiology_join as (
         iff(epidemiology.cumulative_deceased = 'NaN', 0, epidemiology.cumulative_deceased) as cumulative_deceased,
         iff(epidemiology.cumulative_recovered = 'NaN', 0, epidemiology.cumulative_recovered) as cumulative_recovered,
         iff(epidemiology.cumulative_tested = 'NaN', 0, epidemiology.cumulative_tested) as cumulative_tested,
+        0 as active,
         economy.gdp_usd,
         economy.gdp_per_capita_usd,
         economy.human_capital_index,

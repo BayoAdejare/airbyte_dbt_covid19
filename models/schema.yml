@@ -1,32 +1,39 @@
-# TODO:
 version: 2
 
 sources:
   - name: raw_covid19
-    schema: AIRBYTE_SCHEMA
-    database: AIRBYTE_DATABASE
+    schema: airbyte_schema
+    database: covid19_database
     description: A replica of the covid19 demographics data from Google BigQuery Open data.
     tables:
-      - name: STG_DEMOGRAPHICS
+      - name: stg_index
         columns:
-          - name: _AIRBYTE_DATA
-            description: Raw json blob object of demographics data.
+          - name: _airbyte_index_hashid
+            description: Hash column based on the values in the record.
             tests:
               - unique
               - not_null
 
-      - name: STG_ECONOMY
+      - name: stg_demographics
         columns:
-          - name: _AIRBYTE_DATA
-            description: Raw json blob object of economy data.
+          - name: _airbyte_stg_demographics_hashid
+            description: Hash column based on the values in the record.
             tests:
               - unique
               - not_null
 
-      - name: STG_EPIDEMIOLOGY
+      - name: stg_economy
         columns:
-          - name: _AIRBYTE_DATA
-            description: Raw json blob object of epidemiology data.
+          - name: _airbyte_stg_economy_hashid
+            description: Hash column based on the values in the record.
+            tests:
+              - unique
+              - not_null
+
+      - name: stg_epidemiology
+        columns:
+          - name: _airbyte_stg_epidemiology_hashid
+            description: Hash column based on the values in the record.
             tests:
               - unique
               - not_null
@@ -34,16 +41,27 @@ sources:
 
 
 models:
-  - name: stg_demographics
+  - name: base_index
     config:
-      tags: ['pii']
+      materialized: view  
+    columns: 
+      - name: country_name
+        tests:
+          - accepted_values:
+              values: ['United States', 'Canada', 'Mexico']
+              config:
+                severity: warn
+
+  - name: base_demographics
+    config:
+      materialized: view
     columns:
       - name: customer_id
         tests:
           - unique
           - not_null
 
-  - name: stg_economy
+  - name: base_economy
     config:
       materialized: view
     columns:
@@ -56,21 +74,14 @@ models:
           - unique
           - not_null
  
-  - name: stg_epidemiology
+  - name: base_epidemiology
     config:
+      tags: ['daily']
       materialized: view
     columns:
-      - name: order_id
+      - name: location_key
         tests:
-          - unique
-          - not_null
-      - name: status
-        tests:
-          - unique
-          - not_null
+          - relationships:
+              to: ref('base_index')
+              field: location_key
 
-
-# -- loaded_at_field: _airbyte_loaded_at
-# -- freshness:
-# --          warn_after: {count: 24, period: hour}
-# --          error_after: {count: 48, period: hour}
