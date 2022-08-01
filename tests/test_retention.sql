@@ -1,4 +1,0 @@
--- todo: custom dbt test 
--- select 
--- from {{ }};
--- where 

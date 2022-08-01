@@ -21,17 +21,3 @@ sqlfluff lint models.sql
 ```
 
 More info: https://docs.sqlfluff.com/en/stable/configuration.html?highlight=dbt#dbt-project-configuration
-
-
-dbt run --profiles-dir path/to/directory
-
-# TODO:
-
-# -- loaded_at_field: _airbyte_loaded_at
-# -- freshness:
-# --          warn_after: {count: 24, period: hour}
-# # --          error_after: {count: 48, period: hour}
-#       - dbt_utils.unique_combination_of_columns:
-#           combination_of_columns:
-#             - country_code
-#             - order_id

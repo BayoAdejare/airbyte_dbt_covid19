@@ -44,7 +44,6 @@ epidemiology_join as (
         iff(epidemiology.cumulative_deceased = 'NaN', 0, epidemiology.cumulative_deceased) as cumulative_deceased,
         iff(epidemiology.cumulative_recovered = 'NaN', 0, epidemiology.cumulative_recovered) as cumulative_recovered,
         iff(epidemiology.cumulative_tested = 'NaN', 0, epidemiology.cumulative_tested) as cumulative_tested,
-        0 as active,
         economy.gdp_usd,
         economy.gdp_per_capita_usd,
         economy.human_capital_index,
@@ -65,10 +64,26 @@ epidemiology_join as (
         demographics.population_age_50_59,
         demographics.population_age_60_69,
         demographics.population_age_70_79,
-        demographics.population_age_80_and_older
+        demographics.population_age_80_and_older,
+        index.place_id, 
+        index.wikidata_id, 
+        index.country_code,
+        index.country_name,
+        index.location_key, 
+        index.locality_code, 
+        index.locality_name, 
+        index.datacommons_id, 
+        index.subregion1_code, 
+        index.subregion1_name, 
+        index.subregion2_code, 
+        index.subregion2_name, 
+        index.aggregation_level, 
+        index.iso_3166_1_alpha_2,
+        index.iso_3166_1_alpha_3
     from epidemiology
     left join demographics on epidemiology.location_key = demographics.location_key
     left join economy on epidemiology.location_key = economy.location_key
+    left join index on epidemiology.location_key = index.location_key
 
     )
 

@@ -8,7 +8,7 @@ sources:
     tables:
       - name: stg_index
         columns:
-          - name: _airbyte_index_hashid
+          - name: _airbyte_stg_index_hashid
             description: Hash column based on the values in the record.
             tests:
               - unique
@@ -56,7 +56,7 @@ models:
     config:
       materialized: view
     columns:
-      - name: customer_id
+      - name: location_key
         tests:
           - unique
           - not_null
@@ -65,7 +65,7 @@ models:
     config:
       materialized: view
     columns:
-      - name: order_id
+      - name: location_key
         tests:
           - unique
           - not_null
