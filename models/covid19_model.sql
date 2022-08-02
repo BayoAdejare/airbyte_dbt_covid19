@@ -69,7 +69,6 @@ epidemiology_join as (
         index.wikidata_id, 
         index.country_code,
         index.country_name,
-        index.location_key, 
         index.locality_code, 
         index.locality_name, 
         index.datacommons_id, 
