@@ -1,4 +1,4 @@
--- Test assertion for cumulative confirmed cases greater than 0.
+-- Test assertion for cumulative confirmed cases not greater than 0.
 select
     location_key,
     date,
