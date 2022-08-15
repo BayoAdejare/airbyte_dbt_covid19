@@ -1,15 +1,14 @@
-# airbyte_dbt_covid19
+# Sample dbt Transformation Project
 
 dbt transformation project for Snowflake data warehouse. Performs basic transformations for staged snowflake data tables containing covid19 data.
 
-Overview info: https://medium.com/@adebayoadejare/795fdecf2035
-Test Info: 
+Overview info: [Modern Data Integration Stack with Airbyte, Snowflake, and Data Build Tools](https://selectfrom.dev/modern-data-integration-stack-with-airbyte-snowflake-and-dbt-795fdecf2035)
 
-## Model
+dbt Test info: [A Beginner Guide to dbt Tests](https://blog.devgenius.io/a-beginner-guide-to-dbt-tests-31ddc4178170)
 
-![dag_diagram](https://user-images.githubusercontent.com/4624500/174817608-f8513b8f-932e-4c7e-b1e6-2e6ed7f40f6d.png)
+## Lineage Graph
 
-## dbt Tests
+![dag_diagram](../airbyte_dbt_covid19/imgs/dbt_SampleLineageGraph.png)
 
 ## Linting
 
