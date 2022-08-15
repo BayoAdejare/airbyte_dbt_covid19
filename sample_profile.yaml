@@ -1,0 +1,51 @@
+default:
+  outputs:
+
+    dev:
+      type: bigquery
+      method: oauth
+      project: [GCP project id]
+      dataset: [the name of your dbt dataset] # You can also use "schema" here
+      threads: [1 or more]
+      timeout_seconds: 300
+      location: US # Optional, one of US or EU
+      priority: interactive
+      retries: 1
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: [GCP project id]
+      dataset: [the name of your dbt dataset]
+      threads: [1 or more]
+      keyfile: [/path/to/bigquery/keyfile.json]
+      timeout_seconds: 300
+      priority: interactive
+      retries: 1
+
+  target: dev
+
+snowflake-dw:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: [account.region_1]
+
+      # User/password auth
+      user: [USERNAME]
+      password: [PASSWORD]
+
+      role: [USER_ROLE]
+      database: [USER_DATABASE]
+      warehouse: [USER_WAREHOUSE]
+      schema: [USER_SCHEMA]
+      threads: 1
+      client_session_keep_alive: False
+      query_tag: dbt-q
+
+      # optional
+      connect_retries: 0 # default 0
+      connect_timeout: 10 # default: 10
+      retry_on_database_errors: False # default: false 
+      retry_all: False  # default: false
